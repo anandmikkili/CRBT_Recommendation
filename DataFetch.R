@@ -1,3 +1,7 @@
+'
+Script    : DataFetch
+Created   : September 05, 2018
+'
 getDBConnection <- function() {
   dbProps <- read.properties("DB.properties")
   drv <-
