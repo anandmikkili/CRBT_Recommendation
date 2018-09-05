@@ -38,3 +38,24 @@ getToneDescription <- function() {
   dbDisconnect(connection)
   return(toneDescriptions)
 }
+
+getMsisdn <- function() {
+  connection <- getDBConnection()[[1]]
+  dbProps <- getDBConnection()[[2]]
+  msisdns <- dbGetQuery(connection, dbProps$QUERY2)
+  dbDisconnect(connection)
+  return(msisdns)
+}
+
+formatQuery <-
+  function(subs_no, preddate) {
+    print(preddate)
+    connection <- getDBConnection()[[1]]
+    dbProps <- getDBConnection()[[2]]
+    query <- dbProps$QUERY3
+    query <- gsub("SUBS_NO", subs_no, query)
+    query <- gsub("PREDICT_DATE", preddate, query)
+    msisdns <- dbGetQuery(connection, query)
+    dbDisconnect(connection)
+    return(msisdns)
+}
