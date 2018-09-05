@@ -1,15 +1,12 @@
+'
+Script    : app
+Created   : September 05, 2018
+'
 source("PackageLoad.R")
 source("Utils.R")
 source("DataFetch.R")
 library(stringr)
 fileToReco <- fread("MsisdnFile.csv")
-getMsisdn()
-sample <-
-  read.csv(
-    "E:\\CRBT_Recommendation-master\\tonedesc.csv",
-    header = TRUE,
-    stringsAsFactors = FALSE
-  )
 ui <- dashboardPagePlus(
   skin = "blue",
   dashboardHeaderPlus(title = "CRBT Recommender"),
