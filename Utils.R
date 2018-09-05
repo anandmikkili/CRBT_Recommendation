@@ -1,5 +1,7 @@
-
-
+'
+Script    : Utils
+Created   : August 31, 2018
+'
 getData <- function(file) {
   interested <- file[, c(1, 2)]
   purchased <- file[, c(1, 3)]
