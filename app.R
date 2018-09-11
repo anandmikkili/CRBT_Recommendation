@@ -1,18 +1,27 @@
-'
-Script    : app
-Created   : September 05, 2018
-'
 source("PackageLoad.R")
 source("Utils.R")
 source("DataFetch.R")
 library(stringr)
 fileToReco <- fread("MsisdnFile.csv")
+sunData <- fread("sundata.csv")
+getMsisdn()
+sample <-
+  read.csv(
+    "E:\\CRBT_Recommendation-master\\tonedesc.csv",
+    header = TRUE,
+    stringsAsFactors = FALSE
+  )
 ui <- dashboardPagePlus(
   skin = "blue",
   dashboardHeaderPlus(title = "CRBT Recommender"),
   dashboardSidebar(sidebarMenu(
     menuItem("About CRBT",
              tabName = "crbt"),
+    menuItem(
+      "DBRefresh",
+      tabName = "RefreshDB",
+      icon = icon("refresh")
+    ),
     menuItem(
       "Tone Details",
       tabName = "toneDetails",
@@ -82,7 +91,34 @@ ui <- dashboardPagePlus(
             "A caller <strong>RBT</strong> is also known as an answer tone, ringback tone, audible ring, callertune, call tone or connecting tone."
           )
         )
-      ),
+      ),       
+      tabItem(tabName = "RefreshDB", fluidPage(fluidRow(
+        column(
+          width = 12,
+          box(
+            width = NULL,
+            title = "Schedule",
+            status = "primary",
+            solidHeader = TRUE,
+           
+            
+            column(4, wellPanel(
+              dateInput(
+                "date",
+                label = h5('Schedule Date'),
+                value = Sys.Date()
+                
+              )
+            )),
+            
+            
+            actionButton(inputId = "auto", label = "Automatic"),br(),br(),
+           
+             actionButton(inputId = "manual", label = "Manually")
+           
+          )
+        )
+      ))),
       tabItem(
         tabName = "toneCategories",
         br(),
@@ -345,8 +381,7 @@ server <- function(input, output, session) {
   
   
   output$tSburst <- renderSunburst({
-    sunData <- getSunburstCategories()
-    sunburst(sunData, legend = FALSE)
+       sunburst(sunData,legend = list(r = 8, w = 150))
   })
   
   output$tRburst <- renderSunburst({
